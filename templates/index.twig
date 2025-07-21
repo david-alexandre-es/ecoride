@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>{{ app_name ?? 'EcoRide' }}</title>
+		<link rel="stylesheet" type="text/css" href="{{ app_url ?? 'http://localhost:84/ecoride' }}/assets/css/main.css?v={{ "now"|date("u") }}"/>
+		<link rel="stylesheet" type="text/css" href="{{ app_url ?? 'http://localhost:84/ecoride' }}/assets/css/style.css?v={{ "now"|date("u") }}"/>
+		<link rel="stylesheet" type="text/css" href="{{ app_url ?? 'http://localhost:84/ecoride' }}/assets/css/responsive.css?v={{ "now"|date("u") }}"/>
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+		 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		 <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+		 <script type="text/javascript" src="{{ app_url ?? 'http://localhost:84/ecoride' }}/assets/js/main.js?v={{ "now"|date("U") }}"></script>
+
+			{% if tab_js is defined and tab_js %}{% for js in tab_js %}
+				 <script type="text/javascript" src="{{ app_url ?? 'http://localhost:84/ecoride' }}/assets/js/{{ js }}.js?v={{ "now"|date("U") }}"></script>
+			{% endfor %}
+		{% endif %}
+
+		{% block head %}{% endblock %}
+	</head>
+	<body>
+		{% include 'commun/header.twig' %}
+		<div id="corps">
+			{% if dossier is defined %}
+				{% include dossier ~ '/contenu.twig' %}
+			{% else %}
+				{% include 'home/contenu.twig' %}
+			{% endif %}
+		</div>
+
+
+		{% include 'commun/footer.twig' %}
+
+		<div id="calque" class="none">
+			<div id="container-popup">
+				<div id="masque"></div>
+				<div id="pop-connexion" class="divpop none"></div>
+				<div id="pop-publier" class="divpop none"></div>
+				<div id="pop-avis" class="divpop w700 none shadow br10 hidden"></div>
+			</div>
+		</div>
+	</body>
+</html>

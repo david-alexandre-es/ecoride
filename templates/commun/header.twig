@@ -1,0 +1,21 @@
+<header class="site-header">
+	
+	<div class="container">
+		<div>
+			<a href="/ecoride/index"><img src="http://localhost:84/ecoride/assets/images/ecoride.png" alt="Logo EcoRide" class="logo"></a>
+		</div>
+		<nav class="nav">
+			<ul class="lien fs14">
+				<li><a href="/ecoride/publier-trajet">+ publier un trajet</a></li>
+				<li><a href="/ecoride/compte">
+				{% if user_connecte %}
+					{{ user_connecte.prenom }} {{ user_connecte.nom|first|upper }}.
+				{% else %}
+					Se connecter/ S'inscrire
+				{% endif %}
+				</a></li>
+				<li><a href="/ecoride/contact">Contact</a></li>
+			</ul>
+		</nav>
+	</div>
+</header>

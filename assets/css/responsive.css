@@ -1,0 +1,37 @@
+
+@media only screen and (max-width: 800px) {
+    .ticket-covoit {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .trajet {
+        width: 100% !important;
+        justify-content: space-between;
+    }
+
+    .fleche {
+        margin: 0 10px;
+    }
+
+    .prix {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .badges {
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .site-header .container {
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+    }
+    .site-header .nav {
+        width: 100%;
+    }
+
+}

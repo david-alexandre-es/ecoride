@@ -1,0 +1,237 @@
+<!-- Header de la page contact -->
+<div class="bc-vert blanc p40-0">
+    <div class="maxw90p mlr-auto center">
+        <h1 class="fs32 bold mb15">📞 Contactez-nous</h1>
+        <p class="fs16">Nous sommes là pour vous aider ! N'hésitez pas à nous contacter</p>
+    </div>
+</div>
+
+<!-- Section principale -->
+<div class="bc-blanc p40-0">
+    <div class="maxw90p mlr-auto">
+        <div class="flex gap40 justify-between">
+
+            <!-- Formulaire de contact -->
+            <div class="w60p">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="fs20 bold">Envoyez-nous un message</h2>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="flex gap20 mb30">
+                                <div class="w50p">
+                                    <div class="input">
+                                        <input type="text" name="prenom" required placeholder=" ">
+                                        <label>Prénom *</label>
+                                    </div>
+                                </div>
+                                <div class="w50p">
+                                    <div class="input">
+                                        <input type="text" name="nom" required placeholder=" ">
+                                        <label>Nom *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap20 mb30">
+                                <div class="w50p">
+                                    <div class="input">
+                                        <input type="email" name="email" required placeholder=" ">
+                                        <label>Email *</label>
+                                    </div>
+                                </div>
+                                <div class="w50p">
+                                    <div class="input">
+                                        <input type="tel" name="telephone" placeholder=" ">
+                                        <label>Téléphone</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb30">
+                                <label class="block mb10 bold">Sujet *</label>
+                                <div class="input">
+                                    <select name="sujet" required>
+                                        <option value="">Choisissez un sujet</option>
+                                        <option value="question_generale">Question générale</option>
+                                        <option value="probleme_technique">Problème technique</option>
+                                        <option value="probleme_reservation">Problème de réservation</option>
+                                        <option value="probleme_paiement">Problème de paiement</option>
+                                        <option value="signalement">Signalement</option>
+                                        <option value="suggestion">Suggestion d'amélioration</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb30">
+                                <label class="block mb10 bold">Message *</label>
+                                <textarea name="message" rows="8" class="w100p p15 br10 ball" required placeholder="Décrivez votre demande en détail..."></textarea>
+                            </div>
+
+                            <div class="flex align-center gap10 mb30">
+                                <input type="checkbox" name="newsletter" id="newsletter" value="1">
+                                <label for="newsletter" class="fs14 curseur">J'accepte de recevoir des informations sur les nouveautés EcoRide</label>
+                            </div>
+
+                            <button type="submit" class="bc-vert blanc bold br20 p20-40 fs16 curseur">
+                                📧 Envoyer le message
+                            </button>
+
+                            <div class="mt10 fs12 gris">* Champs obligatoires</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations de contact -->
+            <div class="w35p">
+
+                <!-- Coordonnées -->
+                <div class="card mb30">
+                    <div class="card-header">
+                        <h3 class="fs18 bold">Nos coordonnées</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="contact-info mb20">
+                            <div class="flex align-center gap10 mb5">
+                                <span class="fs16">📍</span>
+                                <span class="bold">Adresse</span>
+                            </div>
+                            <div class="fs14 gris contact-detail">
+                                123 Avenue de la Mobilité Verte<br>
+                                83340 Garéoult<br>
+                                France
+                            </div>
+                        </div>
+
+                        <div class="contact-info mb20">
+                            <div class="flex align-center gap10 mb5">
+                                <span class="fs16">📞</span>
+                                <span class="bold">Téléphone</span>
+                            </div>
+                            <div class="fs14 gris contact-detail">
+                                <a href="tel:+33488123456" class="vert">+33 4 88 12 34 56</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-info mb20">
+                            <div class="flex align-center gap10 mb5">
+                                <span class="fs16">📧</span>
+                                <span class="bold">Email</span>
+                            </div>
+                            <div class="fs14 gris contact-detail">
+                                <a href="mailto:contact@ecoride.fr" class="vert">contact@ecoride.fr</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-info mb20">
+                            <div class="flex align-center gap10 mb5">
+                                <span class="fs16">🕒</span>
+                                <span class="bold">Horaires</span>
+                            </div>
+                            <div class="fs14 gris contact-detail">
+                                Du lundi au vendredi<br>
+                                9h00 - 18h00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="card mb30">
+                    <div class="card-header">
+                        <h3 class="fs18 bold">Support rapide</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="support-item mb20">
+                            <div class="flex align-center gap10 mb5">
+                                <span class="fs16">💬</span>
+                                <span class="bold">Chat en ligne</span>
+                            </div>
+                            <div class="fs14 gris mb10">
+                                Disponible du lundi au vendredi<br>
+                                de 9h à 18h
+                            </div>
+                            <button class="bc-bleu blanc br10 p10-20 fs14 curseur">
+                                Démarrer le chat
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section FAQ rapide -->
+<div class="bc-gris p40-0">
+    <div class="maxw90p mlr-auto">
+        <div class="center mb40">
+            <h2 class="fs28 bold mb10">Questions fréquentes</h2>
+            <p class="fs16 gris">Trouvez rapidement des réponses à vos questions</p>
+        </div>
+
+        <div class="flex gap30 justify-center">
+            <div class="w45p">
+                <div class="faq-item card mb20">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">❓ Comment réserver un trajet ?</h4>
+                        <p class="fs14 gris">Recherchez un trajet, cliquez sur "Participer" et confirmez votre réservation. Vous recevrez une confirmation par email.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card mb20">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">💳 Comment se passe le paiement ?</h4>
+                        <p class="fs14 gris">Le paiement se fait directement entre passagers et chauffeur, généralement en espèces ou par virement.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">📱 Puis-je modifier ma réservation ?</h4>
+                        <p class="fs14 gris">Oui, vous pouvez modifier ou annuler votre réservation depuis votre espace personnel jusqu'à 2h avant le départ.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w45p">
+                <div class="faq-item card mb20">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">🚗 Comment publier un trajet ?</h4>
+                        <p class="fs14 gris">Créez un compte, cliquez sur "Publier un trajet" et remplissez les informations demandées. C'est gratuit !</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card mb20">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">⭐ À quoi servent les avis ?</h4>
+                        <p class="fs14 gris">Les avis permettent de construire une communauté de confiance. Notez vos trajets pour aider les autres utilisateurs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item card">
+                    <div class="card-body p20">
+                        <h4 class="fs16 bold mb10">🛡️ Mes données sont-elles sécurisées ?</h4>
+                        <p class="fs14 gris">Nous utilisons les dernières technologies de sécurité pour protéger vos données personnelles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section urgence -->
+<div class="bc-rouge p20-0">
+    <div class="maxw90p mlr-auto center blanc">
+        <h3 class="fs20 bold mb10">🚨 Urgence ou problème grave ?</h3>
+        <p class="fs14 mb15">En cas de problème urgent pendant un trajet, contactez-nous immédiatement</p>
+        <div class="flex gap20 justify-center">
+            <div class="bc-blanc rouge bold br10 p15-30 fs16 emergency-contact">📞 Urgence : +33 4 88 12 34 56</div>
+            <div class="bc-transparent blanc bold br10 p15-30 fs16 ball border-blanc emergency-contact">📧 urgence@ecoride.fr</div>
+        </div>
+    </div>
+</div>

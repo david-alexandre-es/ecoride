@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+  <meta charset="UTF-8">
+  <title>Formulaire</title>
+  <link rel="stylesheet" type="text/css" href="./assets/css/main.css?v={{ "now"|date("U")  }}"/>
+</head>
+<body class="body">
+<div class="centrer-formulaire">
+  <form action="/ecoride/ajax.php" method="POST" class="fn bordure taille-form">
+  <div>
+  <img style="width:100%" src="assets/images/logo.png"/>
+  </div>
+    <input type="hidden" name="controller" value="user"/>
+    <input type="hidden" name="method" value="showUserFromLogin"/>
+
+
+    <div class="center">
+      <input type="text" id="login" value="" name="data[login]">
+    </div>
+    <div class="center">
+      <input type="password" id="password" value="" name="data[password]">
+    </div>
+    <div class="center">
+    <button type="submit" class="bouton">Envoyer</button>
+    </div>
+  </form>
+  </div>
+  </body>
+  </html>

@@ -1,0 +1,194 @@
+{% include 'commun/moteur.twig' %}
+<div class="w100p maxw90p mlr-auto mt30">
+	<input type="hidden" id="nb_place" value="{{ nb_place }}"/>
+
+	{% if liste_covoit is not empty %}
+		<div
+			class="flex w100p justify-between align-start gap2p">
+			<!-- Template Twig mis à jour -->
+			<div id="filtre" class="filtre w20p ball br5 bc-gris p10">
+				{% for cle,filtre in tab_filtre %}
+					<div>
+						<div class="mt20 mb10 fs14 bold">{{ filtre.titre }}</div>
+						{% if filtre.type == 'checkbox' %}
+							{% for type,option in filtre.tableau %}
+								{% if option.nb>0 %}
+									<div class="bb p10-0 fs14">
+										<label class="checkbox">
+											<input type="checkbox" name="{{ cle }}[{{ type }}][]" class="sel_filtre" data-type="{{ type }}" value="0"/>
+											{{ option.nom }}
+										</label>
+									</div>
+								{% endif %}
+							{% endfor %}
+						{% elseif filtre.type == 'range' %}
+							<div class="range-container">
+								<div class="p10-0">
+									<div class="flex justify-between align-center">
+										<div class="fs12 select_affinage" data-type='{{ cle }}_min' id="div_{{ cle }}_min">{{ (filtre.tableau.min)|number_format(2, ',', ' ') }}
+											€
+										</div>
+										<div class="fs12 select_affinage" data-type='{{ cle }}_max' id="div_{{ cle }}_max">{{ (filtre.tableau.max)|number_format(2, ',', ' ') }}
+											€
+										</div>
+									</div>
+								</div>
+								<div id="slider-range" data-min="{{ filtre.tableau.min }}" data-max="{{ filtre.tableau.max }}"></div>
+								<input type="hidden" name="prix_min" id="prix_min" value="{{ filtre.tableau.min }}"/>
+								<input type="hidden" name="prix_max" id="prix_max" value="{{ filtre.tableau.max }}"/>
+							</div>
+						{% endif %}
+					</div>
+				{% endfor %}
+				<div class="mt20 gris fs12 mt5 br10 bc-blanc ball table mlr-auto p0-10 interligne15 h15">
+					<span id="nb_covoit">{{ liste_covoit|length }}</span>
+					covoiturages
+				</div>
+			</div>
+			<div id="liste-covoiturages" class="w80p liste-covoiturages">
+				<!-- Template pour chaque covoiturage -->
+				<!-- Template dynamique pour chaque covoiturage -->
+					{% for covoiturage in liste_covoit %}
+					{% set user_already_in = false %}
+						{% if user_connecte %}
+							{% for passager in covoiturage.passagers %}
+								{% if passager.utilisateur_id == user_connecte.utilisateur_id %}
+							{% set user_already_in = true %}
+						{% endif %}
+					{% endfor %}
+					{% endif %}
+
+						<div class="covoiturage-item ticket-covoit mb20 p15 br10 curseur" data-id="{{ covoiturage.covoiturage_id }}" data-prix="{{ covoiturage.prix_personne }}" data-matin="{{ covoiturage.depart_matin ? '1' : '0' }}" data-fumeur="{{ covoiturage.fumeur ? '1' : '0' }}" data-animal="{{ covoiturage.animal ? '1' : '0' }}" data-note="{{ covoiturage.chauffeur.note_moyenne >= 4 ? '1' : '0' }}" data-eco="{{ covoiturage.voiture.energie == 'electrique' ? '1' : '0' }}"> <div class="flex w100p justify-between align-center">
+							<div
+								class="section-gauche flex w60p">
+								<!-- Trajet -->
+								<div
+									class="trajet flex align-center w100p">
+									<!-- Départ -->
+									<div class="relative">
+										<div class="heure">{{ covoiturage.heure_depart_formated }}</div>
+										<div class="absolute ville fs12 nowrap">{{ covoiturage.ville_depart }}</div>
+									</div>
+
+									<!-- Flèche avec durée -->
+									<div class="flexauto fleche flex justify-center align-center ml10 mr10">
+										<div class="duree z2">{{ covoiturage.duree }}</div>
+									</div>
+
+									<!-- Arrivée -->
+									<div class="relative">
+										<div class="heure">{{ covoiturage.heure_arrivee_formated }}</div>
+										<div class="absolute ville fs12 nowrap">{{ covoiturage.ville_arrivee }}</div>
+									</div>
+								</div>
+
+							</div>
+
+							<!-- Prix -->
+							<div class="section-droite flex flex-column align-center">
+
+								{% if user_already_in %}
+									<div class="vert fs10">
+										✓ Vous participez déjà à ce trajet</div>
+									<div class="mt10 bc-rouge blanc br10 p0-10 interligne20 h20 fs14 annuler">Annuler</div>
+								{% else %}
+									<div class="vert fs24 fw800 prix">
+										{{ covoiturage.prix_personne|number_format(2, ',', ' ') }}€
+										<span class="prix-label">/ pers</span>
+									</div>
+									{% if user_connecte.credit>=covoiturage.prix_personne %}
+										<div class="mt10 bc-vert blanc maj bold br10 p0-30 interligne40 h40 fs14 participer">Participer</div>
+
+									{% else %}
+										<div>
+											<div class="fs14 bold rouge mt5 center">Crédit insuffisant</div>
+										</div>
+									{% endif %}
+
+
+									<!-- Places disponibles -->
+									<div class="gris fs10 mt5">
+										{{ covoiturage.nb_place_reste }}
+										place{{ covoiturage.nb_place_reste > 1 ? 's' : '' }}
+										restante{{ covoiturage.nb_place_reste > 1 ? 's' : '' }}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+						<div class="mt30 flex w100p justify-between align-center">
+							<div class="section-gauche flex w60p">
+								<div
+									class="infos-bas flex gap10 w100p">
+									<!-- Info chauffeur -->
+									<div class="chauffeur-compact flex align-center gap5 flex1">
+										<div class="avatar-small">{{ covoiturage.chauffeur.prenom|first|upper }}</div>
+										<div class="ml10">
+
+											<div class="fs11 bold">
+												<span class="fs10 gris">Chauffeur :
+												</span>
+												{{ covoiturage.chauffeur.prenom }}
+												{{ covoiturage.chauffeur.nom }}
+
+											</div>
+
+											{% if covoiturage.chauffeur.nombre_avis > 0 %}
+												<div class="fs11 gris">
+													<span class="jaune fs14 bold">{{ covoiturage.chauffeur.note_moyenne|number_format(1, ',', ' ') }}</span>
+													<span class="star curseur jaune fs16">
+														★
+													</span>
+													(sur
+													{{ covoiturage.chauffeur.nombre_avis }}
+													avis)
+												</div>
+											{% endif %}
+										</div>
+									</div>
+
+									<!-- Info voiture -->
+									<div class="voiture-compact flex align-center gap5 flex1">
+										<div class="icone-voiture">🚗</div>
+										<div class="ml10">
+											<div class="fs11 bold">{{ covoiturage.voiture.modele|title }}</div>
+											<div class="fs10 gris flex align-center gap5">
+												<span>{{ covoiturage.voiture.couleur|title }}</span>
+												{% if covoiturage.voiture.energie == "electrique" %}
+													<span class="badge badge-option">Voyage ECO</span>
+
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Section droite : badges -->
+							<div class="section-droite flex flex-column align-center">
+								<div class="badges flex mt10">
+									{% if covoiturage.depart_matin %}
+										<span class="badge badge-matin">Matin</span>
+									{% else %}
+										<span class="badge badge-soir">Apres midi</span>
+									{% endif %}
+
+									{% if covoiturage.fumeur %}
+										<span class="badge badge-option">Fumeur accepté</span>
+									{% endif %}
+
+									{% if covoiturage.animal %}
+										<span class="badge badge-option">Animaux acceptés</span>
+									{% endif %}
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% else %}
+		<p>Aucun covoiturage trouvé pour cette recherche.</p>
+	{% endif %}
+</div>

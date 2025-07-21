@@ -1,0 +1,560 @@
+{% if user_connecte %}
+
+	<!-- Header -->
+	<div class="header bc-vert blanc p20-0">
+		<div class="maxw90p mlr-auto flex justify-between align-center">
+			<h1 class="fs24 bold">🚗 Mon Compte Covoiturage</h1>
+			<div class="flex align-center gap20">
+				<span class="fs14">Bonjour
+					{{ user_connecte.prenom }}
+					{{ user_connecte.nom }}</span>
+				<button class="btn bc-rouge blanc br5 p0-10 interligne40 h40" id="logout">Déconnexion</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contenu principal -->
+	<div
+		class="maxw90p mlr-auto mt30">
+		<!-- Navigation par onglets -->
+		<div class="nav-tabs flex bb">
+			<div class="nav-tab onglet active" data-hide="tab-content" data-open="tab-profil" data-replace="active|curseur">
+				Mon Profil
+			</div>
+			<div class="nav-tab onglet" data-hide="tab-content" data-open="tab-covoiturages" data-replace="active|curseur">
+				Mes Covoiturages
+			</div>
+			<div class="nav-tab onglet" data-hide="tab-content" data-open="tab-avis" data-replace="active|curseur">
+				Mes Avis
+			</div>
+		</div>
+		<div
+			class="bl bb br p20">
+			<!-- Onglet Profil -->
+			<div id="tab-profil" class="tab-content">
+				<form class="card" action="/ecoride/ajax.php" method="post">
+					<input type="hidden" name="controller" value="user"/>
+					<input type="hidden" name="method" value="update"/>
+					<input type="hidden" name="utilisateur_id" value="{{ user_connecte.utilisateur_id }}"/>
+
+					<div class="card-header">
+						<div class="flex justify-between align-center">
+							<div>Informations personnelles</div>
+							<button type="submit" class="btn bc-vert blanc br5 p0-10 interligne40 h40">Sauvegarder</button>
+						</div>
+					</div>
+					<div class="card-body ">
+						<div class="flex gap30">
+							<div class="avatar flex justify-center align-center mt10">{{ user_connecte.prenom|first }}{{ user_connecte.nom|first }}</div>
+							<div class="flex1">
+								<div class="flex gap20 mt20">
+									<div class="w50p">
+										<div class="input">
+											<input type="text" name="data[prenom]" value="{{ user_connecte.prenom }}" placeholder=" ">
+											<label>Prénom</label>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input">
+											<input type="text" name="data[nom]" value="{{ user_connecte.nom }}" placeholder=" ">
+											<label>Nom</label>
+										</div>
+									</div>
+								</div>
+								<div class="flex gap20 mt30">
+									<div class="w50p">
+										<div class="input">
+											<input type="email" name="data[email]" value="{{ user_connecte.email }}" placeholder=" ">
+											<label>Email</label>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input">
+											<input type="tel" name="data[telephone]" value="{{ user_connecte.telephone }}" placeholder=" ">
+											<label>Téléphone</label>
+										</div>
+									</div>
+								</div>
+								<div class="flex gap20 mt30">
+									<div class="w50p">
+										<div class="input">
+											<input type="date" name="data[date_naissance]" value="{{ user_connecte.date_naissance }}" placeholder=" ">
+											<label>Date de naissance</label>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input">
+											<input type="text" name="data[num_permis]" value="{{ user_connecte.num_permis }}" placeholder=" ">
+											<label>Numero de permis</label>
+										</div>
+									</div>
+								</div>
+								<div class="flex gap20 mt30">
+									<div class="w50p">
+										<div class="input">
+											<input type="text" name="data[pseudo]" value="{{ user_connecte.pseudo }}" placeholder=" ">
+											<label>Pseudo</label>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input active">
+											<input type="password" name="data[password]" value="" placeholder="Laisser vide pour ne pas changer">
+											<label>Nouveau mot de passe</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<form class="card" action="/ecoride/ajax.php" method="post">
+					<input type="hidden" name="controller" value="voiture"/>
+					<input type="hidden" name="method" value="update"/>
+					<input type="hidden" name="data[utilisateur_id]" value="{{ user_connecte.utilisateur_id }}"/>
+					<input type="hidden" name="voiture_id" value="{{ user_connecte.voiture.voiture_id }}"/>
+					<div class="card-header">
+
+						<div class="flex justify-between align-center">
+							<span>Ma voiture</span>
+							<button class="btn bc-vert blanc br5 p0-10 interligne40 h40">Sauvegarder</button>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="flex gap30">
+							<div class="w30p mt10">
+								<div class="h100 br10 flex justify-center align-center" style="background-color: #ecf0f1; color: #7f8c8d;">
+									🚗 Photo de la voiture
+								</div>
+							</div>
+							<div class="w70p p20-0">
+								<div class="flex gap20 mb20">
+									<div class="w50p">
+										<div class="w100p mb10 input bc-blanc">
+											<select name="data[marque_id]" id="marque_id">
+												{% for marque in liste_marque %}
+													<option value="{{ marque.marque_id }}" {% if marque.marque_id == user_connecte.voiture.marque_id %} selected {% endif %}>
+														{{ marque.nom }}
+													</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input mb10">
+											<input type="text" name="data[modele]" value="{{ user_connecte.voiture.modele }}" placeholder=" ">
+											<label>Modèle</label>
+										</div>
+									</div>
+								</div>
+								<div class="flex gap20 mb20">
+									<div class="w50p">
+										<div class="input mb10">
+											<input type="text" name="data[date_premiere_immatriculation]" value="{{ user_connecte.voiture.date_premiere_immatriculation }}" placeholder=" ">
+											<label>Première immatriculation</label>
+										</div>
+									</div>
+									<div class="w50p">
+										<div class="input mb10">
+											<input type="text" name="data[couleur]" value="{{ user_connecte.voiture.couleur }}" placeholder=" ">
+											<label>Couleur</label>
+										</div>
+									</div>
+								</div>
+								<div class="flex gap20">
+									<div class="w50p">
+										<div class="input mb10">
+											<input type="text" name="data[immatriculation]" value="{{ user_connecte.voiture.immatriculation }}" placeholder=" ">
+											<label>Plaque d'immatriculation</label>
+										</div>
+									</div>
+									<div class="w50p">
+
+										<div class="w100p mb10 input bc-blanc">
+											<select name="data[energie]" id="energie">
+												<option value="electrique" {% if 'electrique' == user_connecte.voiture.energie %} selected {% endif %}>Electrique</option>
+												<option value="essence" {% if 'essence' == user_connecte.voiture.energie %} selected {% endif %}>Essence</option>
+												<option value="diesel" {% if 'diesel' == user_connecte.voiture.energie %} selected {% endif %}>Diesel</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Onglet Covoiturages -->
+			<div
+				id="tab-covoiturages" class="tab-content none">
+				<!-- Statistiques -->
+				<div class="flex gap20 mb30">
+					<div class="card w25p">
+						<div class="card-body center">
+							<div class="fs32 bold" style="color: #3498db;">{{ liste_covoit.chauffeur|length }}</div>
+							<div class="fs14">Trajets en tant que Chauffeur</div>
+						</div>
+					</div>
+					<div class="card w25p">
+						<div class="card-body center">
+							<div class="fs32 bold" style="color: #3498db;">{{ liste_covoit.passager|length }}</div>
+							<div class="fs14">Participation de Trajets</div>
+						</div>
+					</div>
+					<div class="card w25p">
+						<div class="card-body center">
+							<div class="fs32 bold" style="color: #27ae60;">{{ user_connecte.credit }}</div>
+							<div class="fs14">Mon credit actuel</div>
+						</div>
+					</div>
+					<div class="card w25p">
+						<div class="card-body center">
+							<div class="fs32 bold" style="color: #e74c3c;">2</div>
+							<div class="fs14">Trajets à venir</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Navigation des covoiturages -->
+				<div class="flex gap20 mb20">
+					{% if liste_covoit is not empty %}
+						<button class="bc-vert blanc br5 p0-10 interligne40 h40 onglet active" data-hide="covoiturage-content" data-open="covoiturage-chauffeur" data-replace="bc-vert active|btn bc-bleu curseur">
+							Mes trajets (Chauffeur)
+						</button>
+						<button class="btn bc-bleu blanc br5 p0-10 interligne40 h40 onglet curseur" data-hide="covoiturage-content" data-open="covoiturage-passager" data-replace="bc-vert active|btn bc-bleu curseur">
+							Mes réservations (Passager)
+						</button>
+					{% endif %}
+				</div>
+
+				<!-- Trajets en tant que chauffeur -->
+				<div id="covoiturage-chauffeur" class="covoiturage-content">
+					<div class="card">
+						<div class="card-header">Mes trajets en tant que chauffeur</div>
+						<div class="card-body">
+							{% for covoiturage in liste_covoit.chauffeur %}
+								<div class="trip-item" data-id="{{ covoiturage.covoiturage_id }}">
+									<div class="mb10">
+										<div class="flex justify-between align-center gap20">
+											<div class="bold fs16">{{ covoiturage.ville_depart }}
+												→
+												{{ covoiturage.ville_arrivee }}</div>
+											<div>
+												{% if covoiturage.statut =="published" and covoiturage.date_depart|date('Y-m-d') == "now"|date('Y-m-d') %}
+													<div class="bc-vert br5 btn blanc bold interligne30 h30 p0-10 start_covoit">Démarrer le trajet</div>
+												{% elseif covoiturage.statut == "ongoing" %}
+													<div class="bc-rouge br5 btn blanc bold interligne30 h30 p0-10 close_covoit">Terminer le trajet</div>
+												{% elseif covoiturage.statut == "completed" %}
+													<div class="bc-gris br5 btn blanc bold interligne30 h30 p0-10">Trajet terminé</div>
+												{% else %}
+													<div class="status-badge status-{{ covoiturage.statut }}">
+														{{ covoiturage.statut|title }}
+													</div>
+
+												{% endif %}
+
+											</div>
+										</div>
+									</div>
+
+									<div class="flex justify-between mb10">
+										<div>📅
+											{{ covoiturage.date_depart|date('l d F Y') }}
+											-
+											{{ covoiturage.heure_depart_formated }}</div>
+										<div class="bold vert fs16">{{ covoiturage.prix_personne }}€</div>
+									</div>
+
+									<div class="flex justify-between mb10">
+										<div>👥
+											{{ covoiturage.nb_place_reserve }}/{{ covoiturage.nb_place }}
+											places
+																																																																																								                                            occupées
+										</div>
+										<div>⏱️
+											{{ covoiturage.duree|date('H\\hi') }}</div>
+									</div>
+
+									<div class="flex justify-between">
+										<div>
+											🚗
+											{{ covoiturage.voiture.marque ?? 'Marque' }}
+											{{ covoiturage.voiture.modele }}
+											({{ covoiturage.voiture.couleur }})
+										</div>
+										<div>
+											{% if covoiturage.fumeur %}🚬 Fumeur autorisé
+											{% endif %}
+											{% if covoiturage.animal %}🐕 Animaux autorisés
+											{% endif %}
+										</div>
+									</div>
+
+									{% if covoiturage.passagers|length > 0 %}
+										<div class="mt10 pt10 bt">
+											<div class="bold mb5">Passagers confirmés:</div>
+											<div class="flex gap10 flex-wrap">
+												{% for passager in covoiturage.passagers %}
+													<div class="flex align-center gap10">
+														<div class="avatar flex justify-center align-center" style="width: 30px; height: 30px; font-size: 12px;">
+															{{ passager.prenom|first|upper }}{{ passager.nom|first|upper }}
+														</div>
+														<span>{{ passager.prenom|title }}
+															{{ passager.nom|title }}</span>
+														<button class="btn curseur fs12" onclick="contacterPassager({{ passager.utilisateur_id }})" title="Contacter">
+															📞
+														</button>
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+									{% else %}
+										<div class="mt10 pt10 bt">
+											<div class="italic" style="color: #666;">Aucun passager pour le moment</div>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Réservations en tant que passager -->
+				<div id="covoiturage-passager" class="covoiturage-content none">
+					<div class="card">
+						<div class="card-header">Mes réservations en tant que passager</div>
+						<div class="card-body">
+							{% for covoiturage in liste_covoit.passager %}
+								<div class="trip-item" data-id="{{ covoiturage.covoiturage_id }}">
+									<div class="flex justify-between align-center mb10">
+										<div class="flex justify-between align-center gap20">
+											<div class="bold fs16">{{ covoiturage.ville_depart }}
+												→
+												{{ covoiturage.ville_arrivee }}</div>
+										</div>
+										<div class="flex gap10">
+											{% if covoiturage.statut != 'completed' and covoiturage.statut != 'cancelled' %}
+												<button class="btn btn-danger" onclick="annulerReservation({{ covoiturage.covoiturage_id }})">
+													Annuler
+												</button>
+											{% else %}
+												<div class="status-badge status-{{ covoiturage.statut }}">
+													{{ covoiturage.statut|title }}
+												</div>
+											{% endif %}
+										</div>
+									</div>
+
+									<div class="flex justify-between mb10">
+										<div>📅
+											{{ covoiturage.date_depart|date('l d F Y') }}
+											-
+											{{ covoiturage.heure_depart_formated }}</div>
+										<div class="bold rouge fs16">-{{ covoiturage.prix_personne }}€
+										</div>
+									</div>
+
+									<div class="flex justify-between mb10">
+										<div>👥
+											{{ covoiturage.nb_place_reserve_par_user ?? 1 }}
+											place(s) réservée(s)
+										</div>
+										<div>⏱️
+											{{ covoiturage.duree|date('H\\hi') }}</div>
+									</div>
+
+									<div class="flex justify-between">
+										<div>
+											🚗
+											{{ covoiturage.voiture.marque ?? 'Marque' }}
+											{{ covoiturage.voiture.modele }}
+											({{ covoiturage.voiture.couleur }})
+										</div>
+										<div>
+											{% if covoiturage.fumeur %}🚬 Fumeur autorisé
+											{% endif %}
+											{% if covoiturage.animal %}🐕 Animaux autorisés
+											{% endif %}
+										</div>
+									</div>
+
+									<div class="mt10 pt10 bt">
+										<div class="bold mb5">Chauffeur:</div>
+										<div class="flex align-center gap10">
+											<div class="avatar flex justify-center align-center" style="width: 30px; height: 30px; font-size: 12px;">
+												{{ covoiturage.chauffeur.prenom|first|upper }}{{ covoiturage.chauffeur.nom|first|upper }}
+											</div>
+											<span>{{ covoiturage.chauffeur.prenom|title }}
+												{{ covoiturage.chauffeur.nom|title }}</span>
+											{% if covoiturage.chauffeur.note is defined %}
+												<span>(⭐
+													{{ covoiturage.chauffeur.note }})</span>
+											{% endif %}
+										</div>
+									</div>
+
+									{% if covoiturage.statut == 'completed' %}
+										<div class="mt10 pt10 bt">
+											<div class="flex justify-between align-center">
+												<div class="bold">Trajet terminé</div>
+												{% if not covoiturage.note_donnee %}
+													<button class="btn bc-vert br5 blanc interligne20 h20 p0-20" onclick="noterTrajet({{ covoiturage.covoiturage_id }})">
+														Noter le trajet
+													</button>
+												{% else %}
+													<span class="italic vert">✓ Trajet noté</span>
+												{% endif %}
+											</div>
+										</div>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Onglet Avis -->
+			<div id="tab-avis" class="tab-content none">
+
+				{% if liste_covoit.avis is empty %}
+					<div class="text-center py-4">
+						<p class="gris">Aucun avis reçu pour le moment</p>
+					</div>
+				{% else %}
+
+					<!-- Statistiques des avis -->
+					<div class="flex gap20 mb30">
+						<div class="card w25p">
+							<div class="card-body center">
+								<div class="fs32 bold" style="color: #f39c12;">{{ liste_covoit.stats_avis.moyenne_globale }}</div>
+								<div class="fs14">Note moyenne globale</div>
+							</div>
+						</div>
+						<div class="card w25p">
+							<div class="card-body center">
+								<div class="fs32 bold" style="color: #3498db;">{{ liste_covoit.stats_avis.moyenne_conduite }}</div>
+								<div class="fs14">Note moyenne de conduite</div>
+							</div>
+						</div>
+						<div class="card w25p">
+							<div class="card-body center">
+								<div class="fs32 bold" style="color: #27ae60;">{{ liste_covoit.stats_avis.moyenne_convivialite }}</div>
+								<div class="fs14">Note moyenne de convivialite</div>
+							</div>
+						</div>
+						<div class="card w25p">
+							<div class="card-body center">
+								<div class="fs32 bold" style="color: #e74c3c;">{{ liste_covoit.stats_avis.moyenne_ponctualite }}</div>
+								<div class="fs14">Note moyenne de Ponctualite</div>
+							</div>
+						</div>
+					</div>
+
+
+					<!-- Avis reçus -->
+					<div id="avis-recus" class="avis-content">
+						<div class="card">
+							<div class="card-header">
+								Avis reçus de mes passagers
+								{% if liste_covoit.nb_avis > 0 %}
+									<span class="badge">{{ liste_covoit.nb_avis }}</span>
+								{% endif %}
+							</div>
+							<div class="card-body">
+								{% for item in liste_covoit.avis %}
+									{% set avis = item.avis %}
+									{% set covoiturage = item.covoiturage %}
+
+									<div class="bc-gris p20 mb20 br5 ba">
+										<div class="flex justify-between align-center mb10">
+											<div class="flex align-center gap10">
+												<div class="avatar flex justify-center align-center" style="width: 40px; height: 40px; font-size: 14px;">
+													{{ avis.auteur.prenom|first|upper }}{{ avis.auteur.nom|first|upper }}
+												</div>
+												<div>
+													<div class="bold">{{ avis.auteur.prenom }}
+														{{ avis.auteur.nom }}</div>
+													<div class="fs12 gris">Passager</div>
+												</div>
+											</div>
+											<div class="flex align-center gap10">
+												<div class="rating-stars">
+													{% for i in 1..5 %}
+														<span class="star" style="color: {{ i <= avis.note_global ? '#f39c12' : '#ddd' }};">★</span>
+													{% endfor %}
+												</div>
+												<div class="bold">{{ avis.note_global|number_format(1) }}</div>
+											</div>
+										</div>
+
+										<div class="mb10">
+											<div class="bold fs14 mb5">{{ covoiturage.ville_depart }}
+												→
+												{{ covoiturage.ville_arrivee }}</div>
+											<div class="fs12 gris">
+												{{ covoiturage.date_depart|date('d F Y') }}
+												{% if covoiturage.heure_depart %}
+													à
+													{{ covoiturage.heure_depart|date('H:i') }}
+												{% endif %}
+											</div>
+										</div>
+
+										{% if avis.commentaire %}
+											<div class="mb10 fs12 bc-blanc p10 br5">
+												<div class="italic">"{{ avis.commentaire }}"</div>
+											</div>
+										{% endif %}
+
+										<div class="flex gap20 fs12">
+											{% if avis.note_conduite %}
+												<div class="flex align-center gap5">
+													<span>🚗</span>
+													<span>Conduite:
+														{{ avis.note_conduite }}/5</span>
+												</div>
+											{% endif %}
+											{% if avis.note_ponctualite %}
+												<div class="flex align-center gap5">
+													<span>⏰</span>
+													<span>Ponctualité:
+														{{ avis.note_ponctualite }}/5</span>
+												</div>
+											{% endif %}
+											{% if avis.note_convivialite %}
+												<div class="flex align-center gap5">
+													<span>💬</span>
+													<span>Convivialité:
+														{{ avis.note_convivialite }}/5</span>
+												</div>
+											{% endif %}
+										</div>
+
+										{% if avis.recommandation is not null %}
+											<div class="mt10 fs12">
+												<span class="bold">Recommandation:</span>
+												<span class="{{ avis.recommandation ? 'text-success' : 'text-danger' }}">
+													{{ avis.recommandation ? 'Oui' : 'Non' }}
+												</span>
+											</div>
+										{% endif %}
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+{% else %}
+	<div class="flex justify-center align-center" style="height: 70vh">
+		<div>
+			{% include 'compte/formulaire_connexion.twig' %}
+		</div>
+	</div>
+{% endif %}

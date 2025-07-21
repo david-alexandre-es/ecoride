@@ -1,0 +1,126 @@
+{% if user_connecte %}
+
+	<div class="w100p maxw600 mlr-auto br20 hidden bc-blanc shadow">
+
+		<div class="bc-vert p40 center blanc">
+			<h1 class="fs24 bold">🚗 Publier un trajet</h1>
+			<p class="mt10">Partagez votre trajet et voyagez ensemble</p>
+		</div>
+
+		<div class="p40 w100p mlr-auto">
+			<form action="/ecoride/ajax.php" method="POST" id="publier-trajet-form">
+				<input type="hidden" name="controller" value="covoiturage">
+				<input type="hidden" name="method" value="insert">
+				<input type="hidden" name="data[utilisateur_id]" value="{{ user_connecte.utilisateur_id }}">
+				<input type="hidden" name="data[voiture_id]" id="voiture_id" value="{{ user_connecte.voiture.voiture_id }}">
+
+
+				<!-- Section Trajet -->
+				<!-- Section Trajet -->
+					<div class="mb40"> <h2 class="fs18 bold mb40 bc-beige p10 br10">
+						📍 Votre trajet
+					</h2>
+
+					<div class="flex gap20 mb40">
+						<div class="flex1">
+							<div class="input">
+								<select class="select2" required name="data[ville_depart_id]" id="ville_depart_id"></select>
+							</div>
+							<div class="ml20 fs11 gris mt5">Commencez à taper pour voir les suggestions</div>
+						</div>
+
+						<div class="flex1">
+							<div class="input">
+								<select class="select2" required name="data[ville_arrivee_id]" id="ville_arrivee_id"></select>
+							</div>
+							<div class="ml20 fs11 gris mt5">Commencez à taper pour voir les suggestions</div>
+						</div>
+					</div>
+
+					<div class="flex gap20 mb40">
+						<div class="flex1">
+							<div class="input">
+								<input type="date" id="date_depart" name="data[date_depart]" required placeholder=" ">
+								<label>Date de départ *</label>
+							</div>
+						</div>
+
+						<div class="flex1">
+							<div class="input">
+								<input type="time" step="900" id="heure_depart" name="data[heure_depart]" required placeholder=" ">
+								<label>Heure de départ *</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="flex gap20 mb40">
+						<div class="flex1">
+							<div class="input">
+								<input type="number" id="nb_place" name="data[nb_place]" value="1" min="1" step="1" max="5" required placeholder=" ">
+								<label>Nombre de place disponible *</label>
+							</div>
+						</div>
+
+						<div class="flex1">
+							<div class="input">
+								<input type="text" readonly id="duree" placeholder=" ">
+								<label>Durée estimée</label>
+							</div>
+							<input type="hidden" readonly id="duree-raw" name="data[duree]" placeholder=" ">
+							<div class="ml20 fs11 gris mt5">Durée approximative du trajet</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Section Prix -->
+				<div class="mb40">
+					<h2 class="fs18 bold mb40 bc-beige p10 br10">
+						💰 Prix et partage des frais
+					</h2>
+
+					<div class="bc-beige p20 br10">
+						<div class="mb40">
+							<div class="input">
+								<input type="number" id="prix_personne" name="data[prix_personne]" min="0" step="0.5" required placeholder=" ">
+								<label>Prix par personne *</label>
+							</div>
+							<div class="ml20 fs11 gris mt5">Montant en euros par passager</div>
+						</div>
+
+						<div class="flex justify-between align-center p15 bc-blanc br10">
+							<span>Gain total estimé :</span>
+							<span class="bold bc-vert blanc p5-10 br5" id="prix-total">0.00 €</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Section Préférences -->
+				<div class="mb40">
+					<h2 class="fs18 bold mb40 bc-beige p10 br10">
+						⚙️ Vos préférences
+					</h2>
+
+					<div class="flex gap30 mt20">
+
+						<div class="flex align-center gap10 p10 br10 curseur hover-bg-beige">
+							<input type="checkbox" id="fumeur" name="data[fumeur]" value="1">
+							<label for="fumeur" class="curseur">🚬 Fumeur accepté</label>
+						</div>
+
+						<div class="flex align-center gap10 p10 br10 curseur hover-bg-beige">
+							<input type="checkbox" id="animal" name="data[animal]" value="1">
+							<label for="animal" class="curseur">🐕 Animaux acceptés</label>
+						</div>
+					</div>
+				</div>
+
+				<button type="submit" class="w100p center mt30 interligne40 h40 bc-vert blanc p0-20 br20 curseur">
+					🚀 Publier mon trajet
+				</button>
+			</form>
+		</div>
+
+	</div>
+{% else %}
+	{% include 'compte/formulaire_connexion.twig' %}
+{% endif %}

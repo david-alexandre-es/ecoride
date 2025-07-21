@@ -1,0 +1,124 @@
+<div class="card w100p">
+    <div class="card-header">
+        <div class="flex justify-between align-center">
+            <span>📝 Noter ce covoiturage</span>
+            <button class="btn fs30 interligne30 h30 p0-10" onclick="ferme_popup()">×</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- Informations du trajet -->
+        <div class="trip-info">
+            <div class="mb10">
+                <div class="bold fs16">{{ covoiturage.ville_depart }} → {{ covoiturage.ville_arrivee }}</div>
+                <div class="mt10 fs14">📅 {{ covoiturage.date_depart|date('l d F Y') }}</div>
+            </div>
+            <div class="flex align-center gap20">
+                <div class="avatar flex justify-center align-center" style="width: 40px; height: 40px;">{{ covoiturage.chauffeur.prenom|first|upper }}{{ covoiturage.chauffeur.nom|first|upper }} </div>
+                <div>
+                    <div class="bold">{{ covoiturage.chauffeur.prenom|title }} {{ covoiturage.chauffeur.nom|title }}</div>
+                    <div class="fs14" style="color: #666;">Chauffeur</div>
+                </div>
+            </div>
+        </div>
+
+        <form id="notation-form">
+            <input type="hidden" name="controller" value="avis"/>
+            <input type="hidden" name="method" value="insert"/>
+            <input type="hidden" name="data[covoiturage_id]" value="{{ covoiturage.covoiturage_id }}"/>
+            <input type="hidden" name="data[utilisateur_id]" value="{{ covoiturage.utilisateur_id }}"/>
+            <input type="hidden" name="data[auteur_id]" value="{{ user_connecte.utilisateur_id }}"/>
+
+            <input type="hidden" name="data[note_global]" value="">
+            <input type="hidden" name="data[note_ponctualite]" value="">
+            <input type="hidden" name="data[note_conduite]" value="">
+            <input type="hidden" name="data[note_convivialite]" value="">
+
+            <!-- Note globale -->
+            <div class="criteria-item">
+                <div class="fs25 mb10 bold ">Note globale *</div>
+                <div class="rating-container">
+                    <div class="rating-stars fs35" data-rating="global">
+                        <span class="star curseur gris" data-value="1">★</span>
+                        <span class="star curseur gris" data-value="2">★</span>
+                        <span class="star curseur gris" data-value="3">★</span>
+                        <span class="star curseur gris" data-value="4">★</span>
+                        <span class="star curseur gris" data-value="5">★</span>
+                    </div>
+                    <div class="rating-text" id="global-text">Cliquez sur les étoiles</div>
+                </div>
+            </div>
+
+            <!-- Ponctualité -->
+            <div class="criteria-item">
+                <div class="fs20 mb10 bold">Ponctualité</div>
+                <div class="rating-container">
+                    <div class="rating-stars fs24" data-rating="ponctualite">
+                        <span class="star curseur gris" data-value="1">★</span>
+                        <span class="star curseur gris" data-value="2">★</span>
+                        <span class="star curseur gris" data-value="3">★</span>
+                        <span class="star curseur gris" data-value="4">★</span>
+                        <span class="star curseur gris" data-value="5">★</span>
+                    </div>
+                    <div class="rating-text" id="ponctualite-text">Optionnel</div>
+                </div>
+            </div>
+
+            <!-- Conduite -->
+            <div class="criteria-item">
+                <div class="fs20 mb10 bold">Conduite</div>
+                <div class="rating-container">
+                    <div class="rating-stars fs24" data-rating="conduite">
+                        <span class="star curseur gris" data-value="1">★</span>
+                        <span class="star curseur gris" data-value="2">★</span>
+                        <span class="star curseur gris" data-value="3">★</span>
+                        <span class="star curseur gris" data-value="4">★</span>
+                        <span class="star curseur gris" data-value="5">★</span>
+                    </div>
+                    <div class="rating-text" id="conduite-text">Optionnel</div>
+                </div>
+            </div>
+
+            <!-- Convivialité -->
+            <div class="criteria-item">
+                <div class="fs20 mb10 bold">Convivialité</div>
+                <div class="rating-container">
+                    <div class="rating-stars fs24" data-rating="convivialite">
+                        <span class="star curseur gris" data-value="1">★</span>
+                        <span class="star curseur gris" data-value="2">★</span>
+                        <span class="star curseur gris" data-value="3">★</span>
+                        <span class="star curseur gris" data-value="4">★</span>
+                        <span class="star curseur gris" data-value="5">★</span>
+                    </div>
+                    <div class="rating-text" id="convivialite-text">Optionnel</div>
+                </div>
+            </div>
+
+            <!-- Commentaire -->
+            <div class="mt20">
+                <label class="block mb10 bold">Commentaire (optionnel)</label>
+                <textarea class="w100p p10 br5 ball" rows="4" name="data[commentaire]" placeholder="Partagez votre expérience de ce covoiturage..." style="resize: vertical; font-family: inherit;"></textarea>
+            </div>
+
+            <!-- Recommandation -->
+            <div class="mt20">
+                <label class="block mb10 bold">Recommanderiez-vous ce chauffeur ?</label>
+                <div class="flex gap20">
+                    <label class="flex align-center gap10 curseur">
+                        <input type="radio" name="data[recommandation]" value="1">
+                        <span>👍 Oui</span>
+                    </label>
+                    <label class="flex align-center gap10 curseur">
+                        <input type="radio" name="data[recommandation]" value="0">
+                        <span>👎 Non</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Boutons -->
+            <div class="flex justify-end gap10 mt30">
+                <button type="button" class="btn fs14 br5 bc-gris interligne40 h40 p0-10" onclick="ferme_popup()">Annuler</button>
+                <button type="submit" class="btn fs14 br5 bc-vert blanc interligne40 h40 p0-10">Envoyer ma note</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+{
+    "name": "dav1s/ecoride",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "Src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ton Nom",
+            "email": "ton.email@example.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.8"
+    }
+}

@@ -1,0 +1,39 @@
+<div class="moteur">
+
+	<form action="/ecoride/ajax.php" method="post" id="form_recherche_covoiturage" class="w100p">
+		<input type="hidden" name="controller" value="site">
+		<input type="hidden" name="method" value="showListeCovoiturage">
+		<div class="flex justify-between align-end gap2p">
+
+			<div class="w250">
+				<div class="fs12 ml10">Ville de départ</div>
+				<div class="w100p input bc-blanc">
+					<select class="select2" name="ville_depart_id" id="ville_depart_id"></select>
+				</div>
+			</div>
+			<div class="w250">
+				<div class="fs12 ml10">Ville d'arrivée</div>
+				<div class="w100p input bc-blanc">
+					<select class="select2" name="ville_arrivee_id" id="ville_arrivee_id"></select>
+				</div>
+			</div>
+			<div class="w150">
+				<div class="fs12 ml10">Date de départ</div>
+				<div class="w100p input bc-blanc">
+					<input type="date" name="date_depart" id="date_depart" placeholder="Date de départ"/>
+				</div>
+			</div>
+			<div class="w150">
+				<div class="fs12 ml10">Passagers</div>
+				<div class="w100p input bc-blanc">
+					<input type="number" name="nb_place" id="nb_place" placeholder="nb pax"/>
+				</div>
+			</div>
+			<div class="flex1">
+				<div class="w100p input bc-vert blanc fw800 btn curseur">
+					<input type="submit" class="bc-vert blanc curseur fw800" value="Rechercher"/>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
