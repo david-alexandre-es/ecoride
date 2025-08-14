@@ -1,0 +1,42 @@
+# Fichiers de versioning
+.git
+.gitignore
+.gitattributes
+
+# Fichiers de documentation
+README.md
+*.md
+
+# Fichiers de développement
+.vscode
+.idea
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Fichiers de cache
+cache/
+uploads/
+vendor/
+
+# Fichiers Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Fichiers de configuration locale
+.env
+.env.local
+.env.production
+
+# Fichiers de test
+tests/
+test_script.php
+
+# Fichiers de sauvegarde
+*.bak
+*.backup
