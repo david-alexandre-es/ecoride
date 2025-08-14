@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # Service PHP/Apache
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - db
+      - mongodb
+    environment:
+      - DB_HOST=db
+      - DB_NAME=ecoride_covoiturage
+      - DB_USER=root
+      - DB_PASSWORD=root_password
+      - MONGODB_URI=mongodb://mongodb:27017
+      - MONGODB_DATABASE=ecoride
+    networks:
+      - ecoride-network
+
+  # Service MySQL
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: ecoride_covoiturage
+      MYSQL_USER: ecoride_user
+      MYSQL_PASSWORD: ecoride_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./datas/ecoride.sql:/docker-entrypoint-initdb.d/ecoride.sql
+    networks:
+      - ecoride-network
+
+  # Service MongoDB
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_password
+      MONGO_INITDB_DATABASE: ecoride
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - ecoride-network
+
+  # Service phpMyAdmin (optionnel)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root_password
+    depends_on:
+      - db
+    networks:
+      - ecoride-network
+
+  # Service MongoDB Compass (interface graphique pour MongoDB)
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8082:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin_password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin_password@mongodb:27017/
+    depends_on:
+      - mongodb
+    networks:
+      - ecoride-network
+
+volumes:
+  mysql_data:
+  mongodb_data:
+
+networks:
+  ecoride-network:
+    driver: bridge

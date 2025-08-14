@@ -25,6 +25,14 @@ class Config
                 'charset' => 'utf8mb4',
                 'port' => 3306
             ],
+            'mongodb' => [
+                'uri' => 'mongodb://localhost:27017',
+                'database' => 'ecoride',
+                'options' => [
+                    'connectTimeoutMS' => 5000,
+                    'serverSelectionTimeoutMS' => 5000
+                ]
+            ],
             'app' => [
                 'name' => 'EcoRide',
                 'url' => 'http://localhost:84/ecoride',

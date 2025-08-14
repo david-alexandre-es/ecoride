@@ -10,4 +10,6 @@ return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
     'Src\\' => array($baseDir . '/Src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
+    'MongoDB\\' => array($vendorDir . '/mongodb/mongodb/src'),
 );
